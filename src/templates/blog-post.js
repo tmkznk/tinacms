@@ -6,8 +6,35 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
+import { useForm, usePlugin } from 'tinacms'
+
 const BlogPostTemplate = ({ data, pageContext, location }) => {
-  const post = data.markdownRemark
+
+  const formConfig = {
+    id: data.markdownRemark.id,
+    label: "Blog Post",
+    initialValues: data.markdownRemark,
+    onSubmit: values => {
+      alert(`Submitting ${values.frontmatter.title}`)
+    },
+    fields: [
+      {
+        name: "frontmatter.title",
+        label: "Title",
+        component: "text",
+      },
+      {
+        name: "frontmatter.description",
+        label: "Description",
+        component: "textarea",
+      },
+    ],
+  }
+  // Create the form
+  const [post, form] = useForm(formConfig)
+  // Register it with the CMS
+  usePlugin(form)
+
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
