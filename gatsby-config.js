@@ -83,7 +83,19 @@ module.exports = {
         enabled: process.env.NODE_ENV !== 'production',
         sidebar: true,
         plugins: [
-          // We'll add some gatsby-tinacms plugins later
+          {
+            resolve: 'gatsby-tinacms-git',
+            options: {
+              pathToRepo: 'git@github.com:tmkznk/tinacms.git',
+              pathToContent: '/',
+              defaultCommitMessage: 'Edited with TinaCMS',
+              defaultCommitName: 'TinaCMS',
+              defaultCommitEmail: 'biuro@e-maginacje.pl',
+              pushOnCommit: false,
+            },
+          },
+          'gatsby-tinacms-json',
+          'gatsby-tinacms-remark',
         ],
       },
     },
